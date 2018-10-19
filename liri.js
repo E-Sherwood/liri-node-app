@@ -1,53 +1,100 @@
 const dotenv = require("dotenv").config();
 const request = require("request")
-//const KEYS = require("./keys.js");
-const moment = require("./node_modules/moment")
 
-//concert-this <artist-bandname here>
-//search bands in town api and displays information about upcoming events of that artist
-//name of venue, venue location, date of event (mm/dd/yyyy)
+//unneeded????
+// const KEYS = require("./keys.js");
+
+const moment = require("./node_modules/moment")
+const Spotify = require("./node_modules/node-spotify-api")
+const spotify = new Spotify({
+    id: process.env.SPOTIFY_ID,
+    secret: process.env.SPOTIFY_SECRET
+});
+
+
+
 let search = process.argv[2]
-//console.log("getting here");
-const concertSearch = function(){
+const concertSearch = function () {
     let artist = process.argv[3];
     const BIT_URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-    request(BIT_URL, function(err, response, body){
+    request(BIT_URL, function (err, response, body) {
         const JSONdata = JSON.parse(body)[0];
+        // if (JSONdata.datetime === undefined){
+        //     console.log("sorry, this band has no upcoming concerts")
+        // }
+        // else {
         let date = moment(JSONdata.datetime).format("MM/DD/YYYY")
         let time = JSONdata.datetime.slice(11, 16)
         let eventData = [
             "Venue: " + JSONdata.venue.name,
             "Location: " + JSONdata.venue.city + ", " + JSONdata.venue.region,
-            "Date: " +  date,
+            "Date: " + date,
             "Time: " + time
         ].join("\n");
+        console.log("-".repeat(50))
         console.log("searching for the next event starring " + artist)
         console.log("-".repeat(50))
         console.log(eventData)
+
     })
 }
+//if argv[3] is blank --
+const spotifyDefaultSearch = function () {
 
-if(search === "concert-this"){
-  if (!process.argv[3]){
-    console.log("please type in an artist to find their next concert")
-  }
-  else {
-    concertSearch()
-}}
-// switch(search === "spotify-this-song"){
-//     case !pro//cess.argv[3]:
-//     console.log("test")
-//     break;
-//     case process.argv[3]:
-//     spotifySearch()
-// }
+    spotify.search({ type: 'track', query: 'Hammer Smashed Face' }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        spotifyData = [
+            "Band Name: " + data.tracks.items[0].artists[0].name,
+            "Song Name: " + data.tracks.items[0].name,
+            "Album: " + data.tracks.items[0].album.name,
+            "Spotify Link: " + data.tracks.items[0].external_urls.spotify
+        ]
+        console.log("commencing default search")
+        console.log("-".repeat(50))
+        console.log(spotifyData.join("\n"))
+    });
+}
+//if argv[3] has a value
+const spotifyArgSearch = function () {
+    let songName = process.argv[3];
 
+    spotify.search({ type: 'track', query: songName }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        spotifyData = [
+            "Band Name: " + data.tracks.items[0].artists[0].name,
+            "Song Name: " + data.tracks.items[0].name,
+            "Album: " + data.tracks.items[0].album.name,
+            "Spotify Link: " + data.tracks.items[0].external_urls.spotify
+        ]
+        console.log("-".repeat(50))
+        console.log("searching for information on " + songName)
+        console.log("-".repeat(50))
+        console.log(spotifyData.join("\n"))
+    });
+}
 
-//spotify-this-song <song title>
-//uses spotify node to search spotify API to show info of song in terminal
-//artist, song name, preview link of song from spotify, album
-//if no song provided, default to "The Sign" by Ace of Base (gayyyyy, will change later)
-//defult song will be Hammer Smashed Face by Cannibal Corpse, idgaf if i lose points on my grade. fuck Ace of Base
+//statements checking 3rd argument (concert/spotify/movie/do) and running appropriate function
+
+if (search === "concert-this") {
+    if (!process.argv[3]) {
+        console.log("please type in an artist to find their next concert")
+    }
+    else {
+        concertSearch()
+    }
+}
+if (search === "spotify-this-song") {
+    if (!process.argv[3]) {
+        spotifyDefaultSearch();
+    }
+    else {
+        spotifyArgSearch()
+    }
+}
 
 //movie-this <movie-title>
 //searches OMDB API to display movie info 
