@@ -1,7 +1,8 @@
+//unchanged values + external file calls
 const dotenv = require("dotenv").config();
 const request = require("request")
 
-//unneeded????
+//unneeded if defined in liri.js???
 // const KEYS = require("./keys.js");
 
 const moment = require("./node_modules/moment")
@@ -10,10 +11,20 @@ const spotify = new Spotify({
     id: process.env.SPOTIFY_ID,
     secret: process.env.SPOTIFY_SECRET
 });
-
-
-
 let search = process.argv[2]
+
+const help = function(){
+    const helpfulLog = [
+        "Hi, I'm LIRI",
+        "Type 'concert-this' and a band/artist name to see info on their next performance",
+        "Type 'spotify-this-song' and a song name to see useful info on that song",
+        "Type 'movie-this' and a movie title to see information on that movie",
+        "Type 'do-what-it-says' to make me do something random"
+    ]
+    console.log("-".repeat(50))
+    console.log(helpfulLog.join("\n"))
+}
+//concert search function
 const concertSearch = function () {
     let artist = process.argv[3];
     const BIT_URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
@@ -38,7 +49,8 @@ const concertSearch = function () {
 
     })
 }
-//if argv[3] is blank --
+
+//Spotify default search --
 const spotifyDefaultSearch = function () {
 
     spotify.search({ type: 'track', query: 'Hammer Smashed Face' }, function (err, data) {
@@ -56,7 +68,8 @@ const spotifyDefaultSearch = function () {
         console.log(spotifyData.join("\n"))
     });
 }
-//if argv[3] has a value
+
+//Spotify argument search --
 const spotifyArgSearch = function () {
     let songName = process.argv[3];
 
@@ -77,8 +90,17 @@ const spotifyArgSearch = function () {
     });
 }
 
-//statements checking 3rd argument (concert/spotify/movie/do) and running appropriate function
+//OMDB default search --
+const omdbDefaultSearch = function(){
 
+}
+
+//OMDB argument search --
+const omdbArgSearch = function(){
+    
+}
+
+//statements checking 3rd argument (concert/spotify/movie/do/help) and running appropriate function
 if (search === "concert-this") {
     if (!process.argv[3]) {
         console.log("please type in an artist to find their next concert")
@@ -95,6 +117,29 @@ if (search === "spotify-this-song") {
         spotifyArgSearch()
     }
 }
+if (search === "help"){
+    help()
+}
+if (search === "movie-this"){
+    if(!process.argv[3]){
+        omdbDefaultSearch()
+    }
+    else {
+        omdbArgSearch()
+    }
+}
+
+//given time, figure out track search with artist passed in to get specific song by specific artist
+//if (search === "spotify-this-artist"){
+    //if (!process.argv[3]) {
+    //    spotifyDefaultArtistSearch();
+    //}
+    //else {
+    //    spotifyArtistArgSearch()
+    //}
+//}
+
+
 
 //movie-this <movie-title>
 //searches OMDB API to display movie info 
