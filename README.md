@@ -24,3 +24,12 @@
 ^^^really if any returned value from API call is undefined it'll throw an error
 *if band/artist has upcoming concert outside of the USA it'll only display the city name with a comma
 *i can't figure out how to read only certain lines from fs.readFile function, so the do-what-it-says command is currently not working. will read up on line-reader/read + write Streams/pipes to see if that will work. any suggestions? --
+##GIF Links of functioning examples
+###Warning - Dreadful Resolution, I'm sorry ):
+
+* https://media.giphy.com/media/PMiO5EWggVS8VPz7Ke/giphy.gif -- Help Functionality
+* https://media.giphy.com/media/1swuqPT1t6tL5hAsYc/giphy.gif -- Concert Functionality
+* https://media.giphy.com/media/3kGmD45ETVlhz35jWC/giphy.gif -- Movie Functionality
+* https://media.giphy.com/media/27IHpURHsE44vhdW6o/giphy.gif -- Spotify Functionality
+* https://media.giphy.com/media/1eExMesO49U5wyhVJB/giphy.gif -- Random Functionality (or lack of)
+* https://media.giphy.com/media/euGkko45aNlyD9p66G/giphy.gif -- Code Overview
