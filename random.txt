@@ -1,1 +1,15 @@
-spotify-this-song, "I Want it That Way"
+spotify-this-song, I Want it That Way
+spotify-this-song, Raining Blood
+movie-this, Spider-Man 2
+concert-this, Behemoth
+movie-this, Paddington
+spotify-this-song, Blackened
+concert-this, Gorillaz
+movie-this, Twins
+spotify-this-song, Annabel
+concert-this, Nekrogoblikon
+movie-this, Baby Driver
+movie-this, Predator
+spotify-this-song, 
+concert-this, Nine Inch Nails
+concert-this, I Set My Friends On Fire

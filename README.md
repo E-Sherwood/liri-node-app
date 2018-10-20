@@ -9,10 +9,18 @@
     *hits Spotify API searching for "(song title)"
     *returns basic info on the first result for entered song title
 *3.* OMDB movie search
-    *coding in progress
+    *user enters "movie-this" + "(movie title)"
+    *hits OMDB API searching for "(movie title)"
+    *returns information on entered movie title
 *4.* Do something random
-    *coding also in progress
+    *coding in progress
 ##Etc.
 *instructions said to default the Spotify song search to "The Sign" by Ace of Base; i decided "Hammer Smashed Face" by Cannibal Corpse was more my style.
 *instructions said to default the OMDB search to "Mr. Nobody"; i'm cool with that so i left it alone.
-*added a "help" function to give the user some basic instructions
+*added a "help" function to give the user some basic instructions.
+*realized chalk.js was installed with one of my node packages so i added some colors to the terminal to spice it up
+##Known Bugs
+*if a band/artist has no upcoming concerts it throws an error in the concert-this functionality. I tried adding in an if statement that will catch it and return "sorry, no upcoming concerts for this band" but i can't get it to work
+^^^really if any returned value from API call is undefined it'll throw an error
+*if band/artist has upcoming concert outside of the USA it'll only display the city name with a comma
+*i can't figure out how to read only certain lines from fs.readFile function, so the do-what-it-says command is currently not working. will read up on line-reader/read + write Streams/pipes to see if that will work. any suggestions? --
